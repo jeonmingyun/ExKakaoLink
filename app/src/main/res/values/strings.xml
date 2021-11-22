@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ex_KakaoLink</string>
+
+    <!-- KAKAO KEY -->
+    <string name="kakao_native_app_key">adc95842cc34eabf1d75aba42bb7077b</string>
+    <string name="kakao_scheme">kakao${kakao_native_app_key}</string>
+    <string name="kakaolink_host">kakaolink</string>
+</resources>
