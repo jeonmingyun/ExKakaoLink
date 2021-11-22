@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
@@ -20,10 +24,6 @@ import com.kakao.network.callback.ResponseCallback;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +34,35 @@ public class MainActivity extends AppCompatActivity {
 
         getHashKey();
 
+        if (getIntent() != null) {
+            if(getIntent().getData() != null) {
+                Uri uri = getIntent().getData();
+                Log.e("ddddd 1", uri.toString());
+                Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
+                if (uri != null) {
+                    String str = uri.getQueryParameter("seq");
+
+                    // seq의 67이 들어오는 부분
+                }
+            }
+        }
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent != null) {
+            Uri uri = intent.getData();
+            Log.e("ddddd 2", uri.toString());
+            Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
+            if (uri != null) {
+                String str = uri.getQueryParameter("seq");
+
+                // seq의 67이 들어오는 부분
+            }
+        }
     }
 
     public void btnClick(View view) {
@@ -76,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         .setWebUrl(link6)
                         .setMobileWebUrl(link6)
                         .setAndroidExecutionParams("no=2138")
-//                        .setIosExecutionParams("no=2                  138")
+//                        .setIosExecutionParams("no=2138")
                         .build()))
                 .build();
 
@@ -87,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
         KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
             @Override
             public void onFailure(ErrorResult errorResult) {
-                Log.e("kakao_is_success", errorResult.toString());
+                Log.e("kakao_is_fail", errorResult.toString());
             }
 
             @Override
             public void onSuccess(KakaoLinkResponse result) {
-                Log.e("kakao_is_fail", result.toString());
+                Log.e("kakao_is_success", result.toString());
             }
         });
 
