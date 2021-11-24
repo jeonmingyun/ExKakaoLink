@@ -2,7 +2,7 @@
     <string name="app_name">Ex_KakaoLink</string>
 
     <!-- KAKAO KEY -->
-    <string name="kakao_native_app_key">653a2699747f6c80d2b9ba73c302ad9c</string>
+    <string name="kakao_native_app_key">653a2699747f6c80d2b9ba73c302ad9c</string> <!--ex_sns_link-->
     <string name="kakao_scheme">kakao${kakao_native_app_key}</string>
     <string name="kakaolink_host">kakaolink</string>
 </resources>

@@ -28,10 +28,9 @@ android {
 }
 
 dependencies {
-    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.8'
-
-    /* 카카오톡 */
-    implementation group: 'com.kakao.sdk', name: 'kakaolink', version:'1.30.6'
+    /* 카카오 링크 java gradle */
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version: '1.30.6'
+    /* 카카오 링크 kotlin gradle */
     implementation "com.kakao.sdk:v2-talk:2.8.2" // 친구, 메시지(카카오톡)
     implementation "com.kakao.sdk:v2-link:2.8.2" // 메시지(카카오링크)
 

@@ -34,28 +34,9 @@
                     android:host="kakaolink"
                     android:scheme="@string/kakao_scheme" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="psgmall.com"
-                    android:scheme="info" />
-            </intent-filter>
         </activity>
 
-<!--        <activity android:name=".KakaoShareAct">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                <data-->
-<!--                    android:host="kakaolink"-->
-<!--                    android:scheme="@string/kakao_scheme" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <activity android:name=".KakaoLinkKotlinAct"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

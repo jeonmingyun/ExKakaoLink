@@ -8,74 +8,69 @@ import com.kakao.sdk.common.util.KakaoCustomTabsClient
 import com.kakao.sdk.link.LinkClient
 import com.kakao.sdk.link.WebSharerClient
 import com.kakao.sdk.talk.TalkApiClient
-import com.kakao.sdk.template.model.*
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Content
+import com.kakao.sdk.template.model.FeedTemplate
+import com.kakao.sdk.template.model.Link
 
-class KakaoShareAct : AppCompatActivity() {
-
-    private var pid : String? = ""
-    private var img : String? = ""
-    private var product_name : String? = ""
-    private var link : String? = ""
+class KakaoLinkKotlinAct : AppCompatActivity() {
+    private var title: String? = ""
+    private var subTitle: String? = ""
+    private var img: String? = ""
+    private var link: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(intent.getStringExtra("pid") != null){
-//            productVo = ProductVo().fromJson(intent.getStringExtra("data")) as ProductVo
-//            kakaoLink(productVo!!.img, productVo!!.name, productVo!!.price_sell.toString())
-
-            pid = intent.getStringExtra("pid") as String
+        if (intent.getStringExtra("link") != null) {
+            title = intent.getStringExtra("title") as String
+            subTitle = intent.getStringExtra("subTitle") as String
             img = intent.getStringExtra("img") as String
-            product_name = intent.getStringExtra("product_name") as String
             link = intent.getStringExtra("link") as String
 
-            kakaoLink(img!!, product_name!!, link!!)
-        } else if(intent.getStringExtra("Channal") != null){
-
+            sendKakaoLink(initFeedMessage(img!!, title!!, link!!))
+        } else if (intent.getStringExtra("Channal") != null) {
             val url = TalkApiClient.instance.addChannelUrl("_VvxoLs")
 
             KakaoCustomTabsClient.openWithDefault(this, url)
         }
-
         finish()
-
     }
 
-
-    private fun kakaoLink(imageUrl : String, productName : String, link : String) {
-        Log.e("on", "$pid / $productName / $imageUrl / $link");
-        // 공유하기 컨텐츠 설정
-        val defaultFeed = FeedTemplate(
+    /*메시지 만들기*/
+    private fun initFeedMessage(imageUrl: String, productName: String, link: String): FeedTemplate {
+        Log.e("on", "$productName / $imageUrl / $link");
+        return FeedTemplate(
                 content = Content(
-                        title = productName, // 상품이름
-//                description = productPrice, // 상품설명
-                        imageUrl = imageUrl, // Image 설정
-                        link = Link( // 이미지 눌렀을시 처리할 URL 설정
+                        title = productName,
+//                        description = productPrice, // 상품설명
+                        imageUrl = imageUrl,
+                        link = Link(
                                 webUrl = link,
                                 mobileWebUrl = link
                         )
                 ),
-                itemContent = ItemContent(
-                ),
-                buttons = listOf( // 버튼 설정
+                buttons = listOf(
                         Button(
                                 "자세히보기",
-                                Link( // 버튼 눌렀을시 처리할 URL 설정
+                                Link(
                                         webUrl = link,
                                         mobileWebUrl = link
                                 )
                         )
                 )
         )
+    }
 
+    /*메시지 보내기*/
+    private fun sendKakaoLink(defaultFeed : FeedTemplate) {
         // 카카오톡 설치여부 확인
         if (LinkClient.instance.isKakaoLinkAvailable(this)) {
             // 카카오톡으로 카카오링크 공유 가능
             LinkClient.instance.defaultTemplate(this, defaultFeed) { linkResult, error ->
                 if (error != null) {
                     Log.e("on", "카카오링크 보내기 실패", error)
-                }
-                else if (linkResult != null) {
+                } else if (linkResult != null) {
                     Log.d("on", "카카오링크 보내기 성공 ${linkResult.intent}")
                     startActivity(linkResult.intent)
                     // 카카오링크 보내기에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
